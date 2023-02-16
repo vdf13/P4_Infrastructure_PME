@@ -1,0 +1,32 @@
+# This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).
+
+source /etc/network/interfaces.d/*
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+# The primary network interface
+allow-hotplug enp0s3
+iface enp0s3 inet dhcp
+pre-up iptables-restore < /etc/iptables.rules
+
+# The secondary network interface connected to Internal switch
+auto enp0s8
+iface enp0s8 inet static
+address 192.168.10.242
+netmask 255.255.255.240
+post-up ip route add 192.168.10.0/25 via 192.168.10.254 dev enp0s8
+post-up ip route add 192.168.10.128/27 via 192.168.10.254 dev enp0s8
+post-up ip route add 192.168.10.160/28 via 192.168.10.254 dev enp0s8
+post-up ip route add 192.168.10.176/28 via 192.168.10.254 dev enp0s8
+post-up ip route add 192.168.10.192/29 via 192.168.10.254 dev enp0s8
+post-up ip route add 192.168.10.200/29 via 192.168.10.254 dev enp0s8
+
+
+# The third network interface connected to the internal LAN
+auto enp0s9
+iface enp0s9 inet static
+address 10.0.10.254
+netmask 255.255.255.0
