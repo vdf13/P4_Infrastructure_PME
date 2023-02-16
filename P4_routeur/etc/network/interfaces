@@ -1,0 +1,92 @@
+# This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).
+
+source /etc/network/interfaces.d/*
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+# The primary network interface
+#allow-hotplug enp0s3
+#iface enp0s3 inet dhcp
+# auto enp0s3
+# iface enp0s3 inet static
+# address 10.0.0.253
+# netmask 255.255.255.0
+
+# The first network interface connected to the switch in VLAN1
+auto enp0s3
+iface enp0s3 inet static
+address 192.168.11.253
+netmask 255.255.255.0
+broadcast 192.168.11.255
+pre-up iptables-restore < /etc/iptables.rules
+
+# The VLAN 1 network interface, SERVEURS ( PROXY, DNS, DHCP, ....)
+auto vlan1
+iface vlan1 inet static
+address 192.168.10.254
+netmask 255.255.255.240
+broadcast 192.168.10.255
+vlan-raw-device enp0s3
+post-up ip route add 10.0.10.0/24 via 192.168.10.242 dev vlan1
+post-up ip route add default via 192.168.10.242 dev vlan1
+
+# The VLAN 2 network interface, OPERATIONS
+auto vlan2
+iface vlan2 inet static
+address 192.168.10.126
+netmask 255.255.255.128
+broadcast 192.168.10.127
+vlan-raw-device enp0s3
+
+
+# The VLAN 3 network, interface COMMERCIAUX
+auto vlan3
+iface vlan3 inet static
+address 192.168.10.158
+netmask 255.255.255.224
+broadcast 192.168.10.159
+vlan-raw-device enp0s3
+
+
+# The VLAN 4 network, interface R-H
+auto vlan4
+iface vlan4 inet static
+address 192.168.10.174
+netmask 255.255.255.240
+broadcast 192.168.10.175
+vlan-raw-device enp0s3
+
+# The VLAN5 network interface, COMPTABILITE
+auto vlan5
+iface vlan5 inet static
+address 192.168.10.190
+netmask 255.255.255.240
+broadcast 192.168.10.191
+vlan-raw-device enp0s3
+
+# The VLAN6 network interface, IT AIC
+auto vlan6
+iface vlan6 inet static
+address 192.168.10.198
+netmask 255.255.255.248
+broadcast 192.168.10.199
+vlan-raw-device enp0s3
+
+# The VLAN7 network interface, IMPRIMANTES
+auto vlan7
+iface vlan7 inet static
+address 192.168.10.206
+netmask 255.255.255.248
+broadcast 192.168.10.207
+vlan-raw-device enp0s3
+
+# The VLAN22 network interface, TELEPHONIE
+auto vlan22
+iface vlan22 inet static
+address 192.168.11.254
+netmask 255.255.255.0
+broadcast 192.168.11.255
+vlan-raw-device enp0s3

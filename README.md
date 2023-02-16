@@ -9,6 +9,8 @@ Projet de formation: Création de l'infrastructure d'une PME avec mise en place 
 - Installation des serveurs de routage, DHCP, DNS, NTP, WEB
 - Règles firewall
 
+### 3 serveurs : P4_DHCP, P4_Firewall, P4_Routeur ###
+
 <img src="schema_reseau.png" height="450" width="750" >
 
 Valide l'utilisation de :
